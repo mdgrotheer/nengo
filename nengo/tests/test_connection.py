@@ -651,10 +651,10 @@ def test_list_indexing(Simulator, plt, seed):
     line = plt.plot(t, d_data)
     plt.axhline(1, color=line[1].get_color())
 
-    assert np.allclose(a_data[t > 0.15], [0], atol=0.1)
-    assert np.allclose(b_data[t > 0.15], [2], atol=0.1)
-    assert np.allclose(c_data[t > 0.15], [-1, 1], atol=0.1)
-    assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.1)
+    assert np.allclose(a_data[t > 0.15], [0], atol=0.15)
+    assert np.allclose(b_data[t > 0.15], [2], atol=0.15)
+    assert np.allclose(c_data[t > 0.15], [-1, 1], atol=0.15)
+    assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.15)
 
 
 @pytest.mark.filterwarnings('ignore:boolean index did not match')
