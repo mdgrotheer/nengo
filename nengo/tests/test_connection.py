@@ -657,6 +657,48 @@ def test_list_indexing(Simulator, plt, seed):
     assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.15)
 
 
+def test_list_indexing_with_negative_indices(Simulator, plt, seed):
+
+    with nengo.Network(seed=seed) as model:
+        u = nengo.Node([-1, 1])
+        a = nengo.Ensemble(40, dimensions=1)
+        b = nengo.Ensemble(40, dimensions=1, radius=2.2)
+        c = nengo.Ensemble(80, dimensions=2, radius=1.3)
+        d = nengo.Ensemble(80, dimensions=2, radius=1.3)
+        nengo.Connection(u[[0, 1]], a[[0, -1]])
+        nengo.Connection(u[[1, -1]], b[[0, -1]])
+        nengo.Connection(u[[0, 1]], c[[0, 1]])
+        nengo.Connection(u[[1, -1]], d[[0, 1]])
+
+        a_probe = nengo.Probe(a, synapse=0.03)
+        b_probe = nengo.Probe(b, synapse=0.03)
+        c_probe = nengo.Probe(c, synapse=0.03)
+        d_probe = nengo.Probe(d, synapse=0.03)
+
+    with Simulator(model) as sim:
+        sim.run(0.2)
+
+    t = sim.trange()
+    a_data = sim.data[a_probe]
+    b_data = sim.data[b_probe]
+    c_data = sim.data[c_probe]
+    d_data = sim.data[d_probe]
+
+    line = plt.plot(t, a_data)
+    plt.axhline(0, color=line[0].get_color())
+    line = plt.plot(t, b_data)
+    plt.axhline(2, color=line[0].get_color())
+    line = plt.plot(t, c_data)
+    plt.axhline(-1, color=line[0].get_color())
+    line = plt.plot(t, d_data)
+    plt.axhline(1, color=line[1].get_color())
+
+    assert np.allclose(a_data[t > 0.15], [0], atol=0.15)
+    assert np.allclose(b_data[t > 0.15], [2], atol=0.15)
+    assert np.allclose(c_data[t > 0.15], [-1, 1], atol=0.15)
+    assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.15)
+
+
 @pytest.mark.filterwarnings('ignore:boolean index did not match')
 def test_boolean_indexing(Simulator, rng, plt):
     D = 10
