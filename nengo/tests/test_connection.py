@@ -644,15 +644,16 @@ def test_list_indexing(Simulator, plt, seed):
 
     line = plt.plot(t, a_data)
     plt.axhline(0, color=line[0].get_color())
-    assert np.allclose(a_data[t > 0.15], [0], atol=0.1)
     line = plt.plot(t, b_data)
     plt.axhline(2, color=line[0].get_color())
-    assert np.allclose(b_data[t > 0.15], [2], atol=0.1)
     line = plt.plot(t, c_data)
     plt.axhline(-1, color=line[0].get_color())
-    assert np.allclose(c_data[t > 0.15], [-1, 1], atol=0.1)
     line = plt.plot(t, d_data)
     plt.axhline(1, color=line[1].get_color())
+
+    assert np.allclose(a_data[t > 0.15], [0], atol=0.1)
+    assert np.allclose(b_data[t > 0.15], [2], atol=0.1)
+    assert np.allclose(c_data[t > 0.15], [-1, 1], atol=0.1)
     assert np.allclose(d_data[t > 0.15], [1, 1], atol=0.1)
 
 
