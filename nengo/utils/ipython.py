@@ -39,6 +39,7 @@ import uuid
 
 import numpy as np
 
+# pylint: disable=ungrouped-imports
 try:
     import IPython
     from IPython import get_ipython
