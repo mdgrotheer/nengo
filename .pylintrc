@@ -13,6 +13,7 @@ enable = anomalous-backslash-in-string,
          dangerous-default-value,
          line-too-long,
          super-init-not-called,
+         unnecessary-lambda,
          unused-import,
 
 
