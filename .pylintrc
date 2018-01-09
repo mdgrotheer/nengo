@@ -8,6 +8,7 @@ ignore = _vendor
 disable = all, broad-except
 enable = anomalous-backslash-in-string,
          bad-super-call,
+         bad-whitespace,
          bare-except,
          function-redefined,
          dangerous-default-value,
